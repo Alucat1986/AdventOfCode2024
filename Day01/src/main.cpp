@@ -13,11 +13,12 @@ void printVector(const std::vector<int>& vectorToPrint);
 int getDistanceBetweenVectors(const std::vector<int>& leftSide, const std::vector<int>& rightSide);
 int getSimilarityScore(const std::vector<int>& leftSide, const std::vector<int>& rightSide);
 
+
 int main() {
 	std::string file = "input\\input.txt";
 	//std::array<int, 200> leftArray, rightArray;
 	std::vector<int> leftVector, rightVector;
-	
+
 	//readFile(file, leftArray, rightArray);
 	readFile(file, leftVector, rightVector);
 
@@ -85,21 +86,18 @@ void printArray(const std::array<int, 200>& arrayToPrint)
 }
 */
 
-bool readFile(const std::string& filePath, std::vector<int>& leftSide, std::vector<int>& rightSide)
-{
+bool readFile(const std::string& filePath, std::vector<int>& leftSide, std::vector<int>& rightSide) {
 	std::ifstream fileToRead(filePath);
 	std::string line = "", tmpSubString = "";
 	size_t position = 0;
 
-	if ( !fileToRead.is_open() )
-	{
+	if ( !fileToRead.is_open() ) {
 		std::cout << "Failed to open " << filePath << " ...\n";
 		return false;
 	}
 
 	std::cout << "Reading file " << filePath << " ...\n";
-	while ( std::getline(fileToRead, line) )
-	{
+	while ( std::getline(fileToRead, line) ) {
 		std::cout << "Line read: " << line << " Length(" << line.size() << "): ";
 
 		position = line.find_first_of(' ');
@@ -115,35 +113,29 @@ bool readFile(const std::string& filePath, std::vector<int>& leftSide, std::vect
 
 }
 
-void printVector(const std::vector<int>& vectorToPrint)
-{
-	for ( std::cout << "Vector: "; auto const& element : vectorToPrint )
-	{
+void printVector(const std::vector<int>& vectorToPrint) {
+	for ( std::cout << "Vector: "; auto const& element : vectorToPrint ) {
 		std::cout << element << ' ';
 	}
 	std::cout << "\n";
 }
 
-int getDistanceBetweenVectors(const std::vector<int>& leftSide, const std::vector<int>& rightSide)
-{
+int getDistanceBetweenVectors(const std::vector<int>& leftSide, const std::vector<int>& rightSide) {
 	size_t iterator = 0;
 	int distance = 0;
 
-	for ( int element : leftSide )
-	{
+	for ( int element : leftSide ) {
 		distance += std::abs(element - rightSide.at(iterator));
 		iterator++;
 	}
 	return distance;
 }
 
-int getSimilarityScore(const std::vector<int>& leftSide, const std::vector<int>& rightSide)
-{
+int getSimilarityScore(const std::vector<int>& leftSide, const std::vector<int>& rightSide) {
 	size_t iterator = 0;
 	int similarity = 0;
 
-	for ( int element : leftSide )
-	{
+	for ( int element : leftSide ) {
 		similarity += element * std::ranges::count(rightSide, element);
 	} // for ( int element : leftSide )
 	return similarity;
