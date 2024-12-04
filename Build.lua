@@ -2,7 +2,7 @@
 workspace "AdventOfCode2024"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "App"
+   startproject "Day03"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -12,3 +12,4 @@ OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
 include "Day01/Build-Day01.lua"
 include "Day02/Build-Day02.lua"
+include "Day03/Build-Day03.lua"
