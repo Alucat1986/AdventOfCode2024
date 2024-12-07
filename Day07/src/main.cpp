@@ -1,16 +1,44 @@
+#include <algorithm>
+#include <array>
+#include <chrono>
 #include <fstream>
 #include <iostream>
+#include <map>
+#include <ranges>
+#include <span>
+#include <sstream>
 #include <string>
 #include <vector>
 
-bool readFile(const std::string& filePath, std::vector<std::vector<char>>& data);
-unsigned int countXmas(const std::vector<std::vector<char>>& data);
-unsigned int countMas(const std::vector<std::vector<char>>& data);
+struct Calc {
+	long long add(long long a, long long b);
+	long long multiply(long long a, long long);
+	long long concatenate(long long a, long long);
+};
+
+// Thanks to a friend of mine, github.com/HazardyKnusperkeks
+static constexpr auto logTable = [](void) noexcept {
+	std::array<std::int64_t, 12> ret;
+	ret[0] = 1;
+	std::ranges::generate(ret | std::views::drop(1), [log = std::int64_t{ 1 }](void) mutable noexcept {
+		log *= 10;
+		return log;
+	});
+	return ret;
+}();
+
+bool readFile(const std::string& filePath, std::multimap<long long, std::vector<long long>>& data);
+long long sumCalibrationResults(const std::multimap<long long, std::vector<long long>>& data);
+long long sumCalibrationResultsSpan(const std::multimap<long long, std::vector<long long>>& data);
+bool tryForAddition(const long long& sum, const std::vector<long long>& summands);
+bool tryForMultiplication(const long long& product, const std::vector<long long >& factors);
+bool tryForCombinedAddAndMul(const long long sum, long long currentSum, std::vector<long long> factors);
+bool tryForCombinedAddAndMulSpan(const long long sum, long long currentSum, std::span<const long long> factors);
 
 int main() {
 	char fileToLoad;
 	std::string file = "input\\";
-	std::vector<std::vector<char>> xmasSearch;
+	std::multimap<long long, std::vector<long long>> equations;
 
 	std::cout << "Loading (E)xample or (I)nput? ";
 	fileToLoad = std::cin.get();
@@ -22,20 +50,46 @@ int main() {
 	else
 		std::cout << "No File found with that name\n";
 
-	if ( !readFile(file, xmasSearch) )
+	if ( !readFile(file, equations) )
 		std::cout << "Couldn't open file \"" << file << "\"!\n";
 
-	std::cout << "XMAS Amount: " << countXmas(xmasSearch) << "\n";
-	std::cout << "MAS Amount: " << countMas(xmasSearch) << "\n";
+	const auto start = std::chrono::system_clock::now();
+	std::cout << "Sum of Calibration Results: " << sumCalibrationResults(equations) << "\n";
+	const auto end = std::chrono::system_clock::now();
+	
+	const auto startt = std::chrono::system_clock::now();
+	std::cout << "Sum of Calibration Results: " << sumCalibrationResultsSpan(equations) << "\n";
+	const auto endd = std::chrono::system_clock::now();
+
+	std::cout << "Time of execution(copy): " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start) << "\n";
+	std::cout << "Time of execution(span): " << std::chrono::duration_cast<std::chrono::milliseconds>(endd - startt) << "\n";
 
 	std::cin.get();
 }
 
-bool readFile(const std::string& filePath, std::vector<std::vector<char>>& data) {
+long long Calc::add(long long a, long long b) {
+	return a + b;
+}
+
+long long Calc::multiply(long long a, long long b) {
+	if ( !a || !b )
+		return Calc::add(a, b);
+	else
+		return a *= b;
+}
+
+long long Calc::concatenate(long long a, long long b) {
+	if ( !a || !b )
+		return Calc::add(a, b);
+	else {
+		const auto log = std::ranges::upper_bound(logTable, b);
+		return a * *log + b;
+	}
+}
+
+bool readFile(const std::string& filePath, std::multimap<long long, std::vector<long long>>& data) {
 	std::ifstream fileToRead(filePath);
-	std::vector<char> lineVector;
 	std::string line;
-	size_t row = 0;
 
 	if ( !fileToRead.is_open() ) {
 		std::cout << "Failed to open " << filePath << " ...\n";
@@ -44,155 +98,104 @@ bool readFile(const std::string& filePath, std::vector<std::vector<char>>& data)
 
 	std::cout << "Reading file " << filePath << " ...\n";
 	while ( std::getline(fileToRead, line) ) {
+		std::istringstream iStringStream(line);
+		std::vector<long long> lineVector;
+		long long lineKey = 0;
+		long long value = 0;
+		char colon;
+
+#ifdef DEBUG
 		std::cout << "Length: " << line.size() << "\t";
 		std::cout << "Line: " << line;
-		std::cout << "\n";
+		std::cout << "\t\t|\t";
+#endif
 
-		for ( size_t pos = 0; pos < line.size(); pos++ ) {
-			lineVector.emplace_back(line.at(pos));
+		// Assuming the lines are all without errors
+		iStringStream >> lineKey >> colon;
+
+		while ( iStringStream >> value ) {
+			lineVector.push_back(value);
 		}
 
-		data.emplace_back(lineVector);
-		lineVector.clear();
-		row++;
+		data.insert({ lineKey, lineVector });
+
+#ifdef DEBUG
+		std::cout << "Key: " << lineKey << "\t";
+		std::cout << "Values: ";
+		for ( const auto& element : lineVector ) {
+			std::cout << element << " ";
+		}
+		std::cout << "\n\n";
+#endif
 	} // while ( std::getline(fileToRead, line) )
 
 	fileToRead.close();
+	std::cout << "Finished reading file " << filePath << " ...\n";
 	return true;
 }
 
-unsigned int countXmas(const std::vector<std::vector<char>>& data) {
-	unsigned int result = 0;
-
-	for ( size_t row = 0; row < data.size(); row++ ) {
-		for ( size_t column = 0; column < data.at(row).size(); column++ ) {
-			if ( data.at(row).at(column) != 'X' )
-				continue;
-
-			// You can check upwards if the row is low enough
-			if ( row >= 3 ) {
-				if ( data.at(row - 1).at(column) == 'M' &&
-					data.at(row - 2).at(column) == 'A' &&
-					data.at(row - 3).at(column) == 'S' )
-					result++;
-
-				if ( column >= 3 ) {
-					if ( data.at(row - 1).at(column - 1) == 'M' &&
-						data.at(row - 2).at(column - 2) == 'A' &&
-						data.at(row - 3).at(column - 3) == 'S' )
-						result++;
-				}
-
-				if ( column <= data.at(row).size() - 4 ) {
-					if ( data.at(row - 1).at(column + 1) == 'M' &&
-						data.at(row - 2).at(column + 2) == 'A' &&
-						data.at(row - 3).at(column + 3) == 'S' )
-						result++;
-				}
+long long sumCalibrationResults(const std::multimap<long long, std::vector<long long>>& data) {
+	long long sumOfResults = 0;
+	for ( const auto& [result, values] : data ) {
+		if ( tryForCombinedAddAndMul(result, 0, values) ) {
+#ifdef DEBUG
+			std::cout << "\nKey: " << result << " Values: ";
+			for ( const auto& value : values ) {
+				std::cout << value << " ";
 			}
-
-			// You can check downwards if the row is not too low
-			if ( row <= data.size() - 4 ) {
-				if ( data.at(row + 1).at(column) == 'M' &&
-					data.at(row + 2).at(column) == 'A' &&
-					data.at(row + 3).at(column) == 'S' )
-					result++;
-				if ( column >= 3 ) {
-					if ( data.at(row + 1).at(column - 1) == 'M' &&
-						data.at(row + 2).at(column - 2) == 'A' &&
-						data.at(row + 3).at(column - 3) == 'S' )
-						result++;
-				}
-
-				if ( column <= data.at(row).size() - 4 ) {
-					if ( data.at(row + 1).at(column + 1) == 'M' &&
-						data.at(row + 2).at(column + 2) == 'A' &&
-						data.at(row + 3).at(column + 3) == 'S' )
-						result++;
-				}
-			}
-
-			// You can check to the right if the column is not to close to the right edge
-			if ( column <= data.at(row).size() - 4 ) {
-				if ( data.at(row).at(column + 1) == 'M' &&
-					data.at(row).at(column + 2) == 'A' &&
-					data.at(row).at(column + 3) == 'S' )
-					result++;
-			}
-
-			// You can check to the left if the column is not to close to the left edge
-			if ( column >= 3 ) {
-				if ( data.at(row).at(column - 1) == 'M' &&
-					data.at(row).at(column - 2) == 'A' &&
-					data.at(row).at(column - 3) == 'S' )
-					result++;
-			}
+			std::cout << " solvable!\n";
+#endif
+			sumOfResults += result;
 		}
 	}
-	return result;
+	return sumOfResults;
 }
 
-unsigned int countMas(const std::vector<std::vector<char>>& data) {
-	unsigned int result = 0;
-
-	for ( size_t row = 0; row < data.size(); row++ ) {
-		for ( size_t column = 0; column < data.at(row).size(); column++ ) {
-			if ( data.at(row).at(column) != 'A' )
-				continue;
-
-			if ( row >= 1 && column >= 1 && row < data.size() - 1 && column < data.at(row).size() - 1 ) {
-				/*
-				// Checking for + shapes
-				if ( data.at(row - 1).at(column) == 'M' &&
-					data.at(row).at(column - 1) == 'M' &&
-					data.at(row + 1).at(column) == 'S' &&
-					data.at(row).at(column + 1) == 'S' )
-					result++;
-				
-				if ( data.at(row - 1).at(column) == 'S' &&
-					data.at(row).at(column - 1) == 'S' &&
-					data.at(row + 1).at(column) == 'M' &&
-					data.at(row).at(column + 1) == 'M' )
-					result++;
-
-				if ( data.at(row - 1).at(column) == 'M' &&
-					data.at(row).at(column - 1) == 'S' &&
-					data.at(row + 1).at(column) == 'S' &&
-					data.at(row).at(column + 1) == 'M' )
-					result++;
-
-				if ( data.at(row - 1).at(column) == 'S' &&
-					data.at(row).at(column - 1) == 'M' &&
-					data.at(row + 1).at(column) == 'M' &&
-					data.at(row).at(column + 1) == 'S' )
-					result++;
-				*/
-				// Checking for x shapes
-				if ( data.at(row - 1).at(column - 1) == 'M' &&
-					data.at(row - 1).at(column + 1) == 'M' &&
-					data.at(row + 1).at(column - 1) == 'S' &&
-					data.at(row + 1).at(column + 1) == 'S' )
-					result++;
-
-				if ( data.at(row - 1).at(column - 1) == 'S' &&
-					data.at(row - 1).at(column + 1) == 'S' &&
-					data.at(row + 1).at(column - 1) == 'M' &&
-					data.at(row + 1).at(column + 1) == 'M' )
-					result++;
-
-				if ( data.at(row - 1).at(column - 1) == 'M' &&
-					data.at(row - 1).at(column + 1) == 'S' &&
-					data.at(row + 1).at(column - 1) == 'M' &&
-					data.at(row + 1).at(column + 1) == 'S' )
-					result++;
-
-				if ( data.at(row - 1).at(column - 1) == 'S' &&
-					data.at(row - 1).at(column + 1) == 'M' &&
-					data.at(row + 1).at(column - 1) == 'S' &&
-					data.at(row + 1).at(column + 1) == 'M' )
-					result++;
+long long sumCalibrationResultsSpan(const std::multimap<long long, std::vector<long long>>& data) {
+	long long sumOfResults = 0;
+	for ( const auto& [result, values] : data ) {
+		if ( tryForCombinedAddAndMulSpan(result, 0, std::span<const long long>(values)) ) {
+#ifdef DEBUG
+			std::cout << "\nKey: " << result << " Values: ";
+			for ( const auto& value : values ) {
+				std::cout << value << " ";
 			}
+			std::cout << " solvable!\n";
+#endif
+			sumOfResults += result;
 		}
 	}
-	return result;
+	return sumOfResults;
+}
+
+// Deprecated, used for earlier stuff
+bool tryForAddition(const long long& sum, const std::vector<long long>& summands) {
+	return sum == std::ranges::fold_left(summands, 0, std::plus<long long>());
+}
+
+// Deprecated, used for earlier stuff
+bool tryForMultiplication(const long long& product, const std::vector<long long >& factors) {
+	return product == std::ranges::fold_left(factors, 1, std::multiplies<long long>());
+}
+
+bool tryForCombinedAddAndMul(const long long sum, long long currentSum, std::vector<long long> factors) {
+	if ( factors.empty() )
+		return sum == currentSum;
+	else {
+		Calc calc;
+		return tryForCombinedAddAndMul(sum, calc.add(currentSum, *factors.begin()), std::vector<long long>(factors.begin() + 1, factors.end())) ||
+			   tryForCombinedAddAndMul(sum, calc.multiply(currentSum, *factors.begin()), std::vector<long long>(factors.begin() + 1, factors.end())) ||
+			   tryForCombinedAddAndMul(sum, calc.concatenate(currentSum, *factors.begin()), std::vector<long long>(factors.begin() + 1, factors.end()));
+	}
+}
+
+bool tryForCombinedAddAndMulSpan(const long long sum, long long currentSum, std::span<const long long> factors) {
+	if ( factors.empty() )
+		return sum == currentSum;
+	else {
+		Calc calc;
+		return tryForCombinedAddAndMulSpan(sum, calc.add(currentSum, *factors.begin()), factors.subspan(1)) ||
+			   tryForCombinedAddAndMulSpan(sum, calc.multiply(currentSum, *factors.begin()), factors.subspan(1)) ||
+			   tryForCombinedAddAndMulSpan(sum, calc.concatenate(currentSum, *factors.begin()), factors.subspan(1));
+	}
 }
