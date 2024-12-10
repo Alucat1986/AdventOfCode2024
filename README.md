@@ -10,8 +10,8 @@ My next try on these Advent of Code Challenges for the Year 2024!
 * Day #05: Complete
 * Day #06: Complete, for P2 I recommened Release build or it might take roughly ~1hr
 * Day #07: Complete
-* Day #08: Soon
-* Day #09: Soon
+* Day #08: Complete
+* Day #09: Not working
 * Day #10: Soon
 * Day #11: Soon
 * Day #12: Soon

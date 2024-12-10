@@ -2,7 +2,7 @@
 workspace "AdventOfCode2024"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "Day08"
+   startproject "Day09"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -18,8 +18,8 @@ include "Day05/Build-Day05.lua"
 include "Day06/Build-Day06.lua"
 include "Day07/Build-Day07.lua"
 include "Day08/Build-Day08.lua"
--- include "Day09/Build-Day09.lua"
--- include "Day10/Build-Day10.lua"
+include "Day09/Build-Day09.lua"
+include "Day10/Build-Day10.lua"
 -- include "Day11/Build-Day11.lua"
 -- include "Day12/Build-Day12.lua"
 -- include "Day13/Build-Day13.lua"

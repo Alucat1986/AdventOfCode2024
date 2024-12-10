@@ -1,6 +1,6 @@
 @echo off
 
 pushd ..
-premake5 --file=Build.lua vs2022
+premake5 vs2022
 popd
 pause
