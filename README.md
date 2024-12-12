@@ -14,7 +14,7 @@ My next try on these Advent of Code Challenges for the Year 2024!
 * Day #09: Not working
 * Day #10: Complete
 * Day #11: Complete
-* Day #12: Soon
+* Day #12: Part 1 done
 * Day #13: Soon
 * Day #14: Soon
 * Day #15: Soon
