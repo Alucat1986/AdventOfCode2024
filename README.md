@@ -17,7 +17,7 @@ My next try on these Advent of Code Challenges for the Year 2024!
 * Day #12: Part 1 done
 * Day #13: Answer too high for P1
 * Day #14: Part 1 done
-* Day #15: Soon
+* Day #15: Part 1 done
 * Day #16: Soon
 * Day #17: Soon
 * Day #18: Soon
