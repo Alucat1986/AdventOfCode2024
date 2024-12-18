@@ -30,8 +30,8 @@ using MemorySpaceInput = std::array<std::array<char, 71>, 71>;
 using FallingBytesQueue = std::queue<FallingByte>;
 
 bool readFile(const std::string& filePath, FallingBytesQueue& data);
-void makeBytesFall(MemorySpaceExample& memory, FallingBytesQueue& bytes);
-void makeBytesFall(MemorySpaceInput& memory, FallingBytesQueue& bytes);
+void makeBytesFall(MemorySpaceExample& memory, FallingBytesQueue& bytes, std::int64_t fallCounter = 12);
+void makeBytesFall(MemorySpaceInput& memory, FallingBytesQueue& bytes, std::int64_t fallCounter = 1024);
 
 void setStartAndEnd(Node& start, Node& end);
 std::int64_t manhattenDistance(std::int64_t x1, std::int64_t y1, std::int64_t x2, std::int64_t y2);
@@ -65,31 +65,41 @@ int main() {
 	Node startNode;
 	Node endNode;
 	setStartAndEnd(startNode, endNode);
+	FallingByte lastByte;
 
 	const auto start = std::chrono::system_clock::now();
+	const auto startt = std::chrono::system_clock::now();
+	const auto endd = std::chrono::system_clock::now();
 	if ( isExample ) {
 		MemorySpaceExample memorySpace;
 		std::ranges::for_each(memorySpace, [](auto& row) { std::ranges::fill(row, '.'); });
 		makeBytesFall(memorySpace, bytesToFall);
 		partI = aStarPathfinding(memorySpace, startNode, endNode);
+		partII = aStarPathfinding(memorySpace, startNode, endNode);
+		while ( partII && !bytesToFall.empty() ) {
+			lastByte = bytesToFall.front();
+			makeBytesFall(memorySpace, bytesToFall, 1);
+			partII = aStarPathfinding(memorySpace, startNode, endNode);
+		} // while ( partII )
 	} // if ( isExample )
 	else if ( !isExample ) {
 		MemorySpaceInput memorySpace;
 		std::ranges::for_each(memorySpace, [](auto& row) { std::ranges::fill(row, '.'); });
 		makeBytesFall(memorySpace, bytesToFall);
 		partI = aStarPathfinding(memorySpace, startNode, endNode);
-		// partI = shortestPath();
-	}
+		partII = aStarPathfinding(memorySpace, startNode, endNode);
+		while ( partII && !bytesToFall.empty() ) {
+			lastByte = bytesToFall.front();
+			makeBytesFall(memorySpace, bytesToFall, 1);
+			partII = aStarPathfinding(memorySpace, startNode, endNode);
+		} // while ( partII )
+	} // else if ( !isExample )
 	const auto end = std::chrono::system_clock::now();
-
-	const auto startt = std::chrono::system_clock::now();
-	// partI = shortestPath();
-	const auto endd = std::chrono::system_clock::now();
 
 	std::cout << "\n===========================================================\n";
 	std::cout << "PartI:\t" << partI << "\tTime of execution:\t";
 	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start) << "\n";
-	std::cout << "PartII:\t" << partII << "\tTime of execution:\t";
+	std::cout << "PartII:\t" << lastByte.PosX << ", " << lastByte.PosY << "\tTime of execution:\t";
 	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(endd - startt) << "\n";
 	std::cout << "===========================================================\n";
 
@@ -121,19 +131,21 @@ bool readFile(const std::string& filePath, FallingBytesQueue& data) {
 	return true;
 }
 
-void makeBytesFall(MemorySpaceExample& memory, FallingBytesQueue& bytes) {
-	for ( std::size_t counter = 0; counter < 12; counter++ ) {
+void makeBytesFall(MemorySpaceExample& memory, FallingBytesQueue& bytes, std::int64_t fallCounter) {
+	for ( std::size_t counter = 0; counter < fallCounter; counter++ ) {
 		FallingByte byte = bytes.front();
 		bytes.pop();
 		memory[byte.PosY][byte.PosX] = '#';
+		debugLog("Byte ", byte.PosX, ",", byte.PosY, " fell!");
 	} // for ( std::size_t counter = 0; counter < 12; counter++ )
 }
 
-void makeBytesFall(MemorySpaceInput& memory, FallingBytesQueue& bytes) {
-	for ( std::size_t counter = 0; counter < 1024; counter++ ) {
+void makeBytesFall(MemorySpaceInput& memory, FallingBytesQueue& bytes, std::int64_t fallCounter) {
+	for ( std::size_t counter = 0; counter < fallCounter; counter++ ) {
 		FallingByte byte = bytes.front();
 		bytes.pop();
 		memory[byte.PosY][byte.PosX] = '#';
+		debugLog("Byte ", byte.PosX, ",", byte.PosY, " fell!");
 	} // for ( std::size_t counter = 0; counter < 1024; counter++ )
 }
 
