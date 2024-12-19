@@ -13,12 +13,10 @@
 
 using StringVector = std::vector<std::string>;
 
-static constexpr std::int64_t NoCombination = -1;
-
 bool readFile(const std::string& filePath, StringVector& towels, StringVector& toDisplay);
 void printVector(const StringVector& toPrint);
 std::int64_t sumOfPossibleDesigns(const StringVector& towels, const StringVector& toDisplay);
-bool isDesignPossible(const std::string& displayTowel, std::string startTowel, const StringVector& towels);
+bool isDesignPossible(const std::string& displayTowel, const StringVector& towels);
 
 int main() {
 	char fileToLoad;
@@ -26,7 +24,7 @@ int main() {
 	std::int64_t partI = 0, partII = 0;
 
 	std::cout << "Loading (E)xample or (I)nput? ";
-	fileToLoad = std::cin.get();
+	fileToLoad = static_cast<char>(std::cin.get());
 
 	if ( fileToLoad == 'E' || fileToLoad == 'e' )
 		file += "example.txt";
@@ -113,46 +111,33 @@ std::int64_t sumOfPossibleDesigns(const StringVector& towels, const StringVector
 	std::int64_t result = 0;
 
 	for ( const auto& displayTowel : toDisplay ) {
-		for ( const auto& towel : towels ) {
-			if ( displayTowel.starts_with(towel) ) {
-				debugLog("Towel ", displayTowel, " starts with : ", towel);
-				if ( isDesignPossible(displayTowel, towel, towels) ) {
-					debugLog("Towel ", displayTowel, " adds 1 to Score.");
-					result++;
-					break;
-				}
-			} // if ( displayTowel.starts_with(towel) )
-		} // for ( const auto& towel : towels )
+		if ( isDesignPossible(displayTowel, towels) ) {
+			debugLog("Towel ", displayTowel, " adds 1 to Score.");
+			result++;
+		} // if ( isPossible(displayTowel, towels) )
 	} // for ( const auto& displayTowel : toDisplay )
 
 	return result;
 }
 
-bool isDesignPossible(const std::string& displayTowel, std::string startTowel, const StringVector& towels) {
-	std::string towelCombination(startTowel);
-	bool result = false;
-
+bool isDesignPossible(const std::string& displayTowel, const StringVector& towels) {
 	for ( const auto& towel : towels ) {
-		towelCombination += towel;
+		debugLog("isDesignPossible? ", displayTowel, " ", towel);
+		if ( displayTowel.starts_with(towel) ) {
+			//debugLog("Starts with ", towel);
+			auto remainingDisplayTowel = displayTowel.substr(towel.size());
+			
+			if ( remainingDisplayTowel.empty() ) {
+				debugLog("Correct Towel: ", displayTowel);
+				return true;
+			} // if ( remainingDisplayTowel.empty() )
 
-		if ( !displayTowel.starts_with(towelCombination) ) {
-			debugLog("Doesn't start with ", towelCombination);
-			towelCombination = startTowel;
-			continue;
-		} // if ( displayTowel.starts_with(towelCombination) )
+			if ( isDesignPossible(remainingDisplayTowel, towels) ) {
+				debugLog("Continuing with ", remainingDisplayTowel);
+				return true;
+			} // if ( isDesignPossible(remainingDisplayTowel, towel, towels) )
 
-		if ( displayTowel == towelCombination && displayTowel.size() == towelCombination.size() ) {
-			debugLog("Correct Towel: ", displayTowel, " == ", towelCombination);
-			return true;
-		} // if ( displayTowel == towelCombination )
-
-		if ( displayTowel.size() < towelCombination.size() ) {
-			debugLog("Towel: ", displayTowel, " != ", towelCombination, " too long!");
-			return false;
-		} // else if ( displayTowel.size() < towelCombination.size() )
-		else {
-			return isDesignPossible(displayTowel, towelCombination, towels);
-		}
+		} // if ( displayTowel.starts_with(towel) )
 	} // for ( const auto& towel : towels )
-	return result;
-}	
+	return false;
+}
