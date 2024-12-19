@@ -20,7 +20,7 @@ My next try on these Advent of Code Challenges for the Year 2024!
 * Day #15: Part 1 done
 * Day #16: Nope
 * Day #17: Nope
-* Day #18: Soon
+* Day #18: Complete
 * Day #19: Soon
 * Day #20: Soon
 * Day #21: Soon

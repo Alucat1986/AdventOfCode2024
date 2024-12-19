@@ -1,7 +1,9 @@
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <fstream>
 #include <iostream>
+#include <unordered_map>
 #include <queue>
 #include <ranges>
 #include <stack>
@@ -13,28 +15,11 @@
 
 using MazeMap = std::vector<std::string>;
 
-enum class Direction {
-	Up,
-	Right,
-	Down,
-	Left
-};
-
-const std::vector<std::pair<std::int64_t, std::int64_t>> directions = {
-	{ 0, -1 },
-	{+1,  0 },
-	{ 0, +1 },
-	{-1,  0 }
-};
-
 struct Node {
 	std::int64_t PosX = 0;
 	std::int64_t PosY = 0;
-	std::int64_t Costs = 0;
-
-	bool operator==(const Node& other) const {
-		return PosX == other.PosX && PosY == other.PosY;
-	}
+	std::int64_t Cost = 0;
+	std::int64_t TotalCost = 0;
 };
 
 
@@ -42,8 +27,9 @@ bool readFile(const std::string& filePath, MazeMap& maze);
 void findStartAndEnd(Node& start, Node& end, const MazeMap& maze);
 void printMap(const MazeMap& maze);
 
-std::int64_t findShortestPath(const MazeMap& maze);
-bool isValid(const Node& node, const MazeMap& maze, const std::vector<std::vector<bool>>& visited);
+std::int64_t manhattenDistance(std::int64_t x1, std::int64_t y1, std::int64_t x2, std::int64_t y2);
+auto operator<(const Node& a, const Node& b);
+std::int64_t aStarPathfinding(const MazeMap& maze, Node& start, Node& end);
 
 int main() {
 	char fileToLoad;
@@ -69,8 +55,11 @@ int main() {
 	
 	printMap(maze);
 
+	Node startNode, endNode;
+	findStartAndEnd(startNode, endNode, maze);
+
 	const auto start = std::chrono::system_clock::now();
-	partI = findShortestPath(maze);
+	partI = aStarPathfinding(maze, startNode, endNode);
 	const auto end = std::chrono::system_clock::now();
 
 	const auto startt = std::chrono::system_clock::now();
@@ -130,162 +119,69 @@ void printMap(const MazeMap& maze) {
 	std::cout << "\n";
 }
 
-std::int64_t findShortestPath(const MazeMap& maze) {
-	Node start, end;
-	findStartAndEnd(start, end, maze);
-	std::int64_t result = 0;
-
-	std::vector<std::vector<bool>> visitedNodes(maze.size(), std::vector<bool>(maze[0].size(), false));
-	std::queue<Node> path;
-	Direction currentDir = Direction::Right;
-
-	visitedNodes[start.PosX][start.PosY] = true;
-	path.push(start);
-
-	while ( !path.empty() ) {
-		Node node = path.front();
-		path.pop();
-
-		for ( std::size_t i = 0; i < 4; i++ ) {
-			Node newNode = { node.PosX, node.PosY, node.Costs };
-
-			switch ( i ) {
-				case 0:
-					switch ( currentDir ) {
-						case Direction::Up:
-							newNode.Costs++;
-							break;
-						case Direction::Right:
-							currentDir = Direction::Up;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						case Direction::Down:
-							currentDir = Direction::Up;
-							newNode.Costs += 2000;
-							newNode.Costs++;
-							break;
-						case Direction::Left:
-							currentDir = Direction::Up;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						default:
-							std::cout << "Oh no UP :(\n";
-							break;
-					} // switch ( currentDir )
-					newNode.PosY--;
-					break;
-				case 1:
-					switch ( currentDir ) {
-						case Direction::Up: {
-							currentDir = Direction::Right;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Right: {
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Down: {
-							currentDir = Direction::Right;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Left: {
-							currentDir = Direction::Right;
-							newNode.Costs += 2000;
-							newNode.Costs++;
-							break;
-						}
-						default:
-							std::cout << "Oh no RIGHT :(\n";
-							break;
-					} // switch ( currentDir )
-					newNode.PosX++;
-					break;
-				case 2:
-					switch ( currentDir ) {
-						case Direction::Up: {
-							currentDir = Direction::Down;
-							newNode.Costs += 2000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Right: {
-							currentDir = Direction::Down;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Down: {
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Left: {
-							currentDir = Direction::Down;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						default:
-							std::cout << "Oh no DOWN :(\n";
-							break;
-					} // switch ( currentDir )
-					newNode.PosY++;
-					break;
-				case 3:
-					switch ( currentDir ) {
-						case Direction::Up: {
-							currentDir = Direction::Left;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Right: {
-							currentDir = Direction::Left;
-							newNode.Costs += 2000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Down: {
-							currentDir = Direction::Left;
-							newNode.Costs += 1000;
-							newNode.Costs++;
-							break;
-						}
-						case Direction::Left: {
-							newNode.Costs++;
-							break;
-						}
-						default:
-							std::cout << "Oh no :(\n";
-							break;
-					} // switch ( currentDir )
-					newNode.PosX--;
-					break;
-				default:
-					std::cout << "noooo nooo...\n";
-					break;
-			} // switch ( i )
-
-			if ( isValid(newNode, maze, visitedNodes) ) {
-				visitedNodes[newNode.PosY][newNode.PosX] = true;
-
-				path.push(newNode);
-			} // if ( isValid(newNode, maze, visitedNodes) ) {
-
-			if ( node == end ) {
-				return node.Costs;
-			} // if ( node.PosX == end.PosX && node.PosY == end.PosY )
-		} // for ( std::size_t i = 0; i < 4; i++ )
-	} // while ( !path.empty() )
-
-	return -1;
+std::int64_t manhattenDistance(std::int64_t x1, std::int64_t y1, std::int64_t x2, std::int64_t y2) {
+	return std::abs(x1 - x2) + std::abs(y1 - y2);
 }
 
-bool isValid(const Node& node, const MazeMap& maze, const std::vector<std::vector<bool>>& visited) {
-	return maze[node.PosY][node.PosX] != '#' && !visited[node.PosY][node.PosX];
+auto operator<(const Node& a, const Node& b) {
+	return a.TotalCost > b.TotalCost;
+}
+
+std::int64_t aStarPathfinding(const MazeMap& maze, Node& start, Node& end) {
+	std::size_t rows = maze.size();
+	std::size_t columns = maze[0].size();
+
+	auto isValid = [&](std::int64_t x, std::int64_t y) -> bool {
+		return x >= 0 && y >= 0 && x < rows && y < columns && maze[x][y] != '#';
+		};
+
+	std::priority_queue<Node> openSet;
+	std::unordered_map<std::int64_t, Node> cameFrom;
+	std::unordered_map<std::int64_t, std::int64_t> costScore;
+
+	auto index = [&](std::int64_t x, std::int64_t y) { return x * columns + y; };
+
+	costScore[index(start.PosX, start.PosY)] = 0;
+	start.TotalCost = manhattenDistance(start.PosX, start.PosY, end.PosX, end.PosY);
+	openSet.push(start);
+
+	while ( !openSet.empty() ) {
+		Node current = openSet.top();
+		openSet.pop();
+
+		if ( current.PosX == end.PosX && current.PosY == end.PosY ) {
+			std::vector<Node> path;
+			while ( cameFrom.contains(index(current.PosX, current.PosY)) ) {
+				path.push_back(current);
+				current = cameFrom[index(current.PosX, current.PosY)];
+			} // while ( cameFrom.contains(index(current.PosX, current.PosY)) )
+
+			path.push_back(start);
+			std::ranges::reverse(path);
+
+			for ( auto& element : path ) {
+				std::cout << "(" << element.PosX << "," << element.PosY << ") ->";
+			}
+			return static_cast<std::int64_t>(path.size() - 1);
+		} // if ( current.PosX == end.PosX && current.PosY == end.PosY )
+
+		for ( const auto& [dx, dy] : { std::pair{-1, 0}, std::pair{1, 0}, std::pair{0, -1}, std::pair{0, 1} } ) {
+			std::int64_t nx = current.PosX + dx, ny = current.PosY + dy;
+
+			if ( !isValid(nx, ny) ) continue;
+
+			std::int64_t tentativeCost = current.Cost + 1;
+			std::int64_t neighbourIndex = index(nx, ny);
+
+			if ( !costScore.contains(neighbourIndex) || tentativeCost < costScore[neighbourIndex] ) {
+				costScore[neighbourIndex] = tentativeCost;
+
+				Node neighbour = { nx, ny, tentativeCost, tentativeCost + manhattenDistance(nx, ny, end.PosX, end.PosY) };
+				cameFrom[neighbourIndex] = current;
+				openSet.push(neighbour);
+			} // if ( !costScore.contains(neighbourIndex) || tentativeCost < costScore[neighbourIndex] )
+		} // for ( const auto& [dx, dy] : { std::pair{-1, 0}, std::pair{1, 0}, std::pair{0, -1}, std::pair{0, 1} } )
+	} // while ( !openSet.empty() )
+
+	return 0;
 }
