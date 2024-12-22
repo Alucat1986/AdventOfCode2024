@@ -109,11 +109,9 @@ std::int64_t mixAndPrune(const std::int64_t& currentNumber, const std::int64_t& 
 }
 
 void multiplyMixAndPrune(std::int64_t& currentNumber, const std::int64_t& value) {
-	std::int64_t result = currentNumber * value;
-	currentNumber = mixAndPrune(currentNumber, result);
+	currentNumber = mixAndPrune(currentNumber, currentNumber * value);
 }
 
 void divideMixAndPrune(std::int64_t& currentNumber, const std::int64_t& value) {
-	std::int64_t result = static_cast<std::int64_t>(currentNumber / value);
-	currentNumber = mixAndPrune(currentNumber, result);
+	currentNumber = mixAndPrune(currentNumber, currentNumber / value);
 }
