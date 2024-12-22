@@ -23,6 +23,6 @@ My next try on these Advent of Code Challenges for the Year 2024!
 * Day #18: Complete
 * Day #19: Not working on my own input data
 * Day #20: Nope
-* Day #21: Soon
-* Day #22: Soon
+* Day #21: Nope
+* Day #22: Part 1 done
 * Day #23: Soon
