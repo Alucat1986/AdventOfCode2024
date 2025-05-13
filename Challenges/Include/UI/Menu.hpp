@@ -1,7 +1,7 @@
 /**
  * @file Menu.hpp
  * @author Alunya
- * @brief Contains the Menu class declaration.
+ * @brief Contains the menu class declaration.
  * @date 13.05.2025
  */
 

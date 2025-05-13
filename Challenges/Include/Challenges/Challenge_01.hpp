@@ -1,7 +1,7 @@
 /**
  * @file challenge_01.hpp
  * @author Alunya
- * @brief Contains the day 01 challenge declarations.
+ * @brief Contains the day 01 challenge declaration.
  * @date 13.05.2025
  */
 

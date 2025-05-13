@@ -1,7 +1,7 @@
 /**
  * @file debug.hpp
  * @author Alunya
- * @brief Contains the Implementation of the debug functions.
+ * @brief Contains the logging functions Implementations.
  * @date 13.05.2025
  */
 

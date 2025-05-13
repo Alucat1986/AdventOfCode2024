@@ -1,14 +1,14 @@
 /**
  * @file App.hpp
  * @author Alunya
- * @brief Contains the App class declaration.
+ * @brief Contains the app class declaration.
  * @date 13.05.2025
  */
 
 #ifndef APP_HPP
 #define APP_HPP
 
-#include "../UI/Menu.hpp"
+#include "Include/UI/Menu.hpp"
 
 namespace aoc {
 /**

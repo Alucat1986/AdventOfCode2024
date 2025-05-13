@@ -1,7 +1,7 @@
 /**
  * @file challenge_01.cpp
  * @author Alunya
- * @brief Contains the day 01 challenge implementations.
+ * @brief Contains the day 01 challenge implementation.
  * @date 13.05.2025
  */
 
