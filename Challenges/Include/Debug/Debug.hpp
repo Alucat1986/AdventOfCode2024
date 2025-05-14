@@ -8,7 +8,9 @@
 #ifndef DEBUG_HPP
 #define DEBUG_HPP
 
+#include <cstdint>
 #include <iostream>
+#include <string>
 #include <vector>
 
 namespace debug {
@@ -20,10 +22,10 @@ void logMessage( Args... args ) {
 #endif // ifdef DEBUG
 }
 
-void logVector( const std::string& prefix, std::vector<long long>& data ) {
+inline void logVector( const std::string& prefix, std::vector<std::int64_t>& data ) {
 #ifdef DEBUG
     std::cout << prefix << " ";
-    for ( const long long element : data ) {
+    for ( const std::int64_t element : data ) {
         std::cout << element << " ";
     } // for ( const int element : data ) {
     std::cout << "\n";
@@ -41,4 +43,5 @@ void logVector( const std::string& prefix, std::vector<long long>& data ) {
 #  define debugLogVector( prefix, data )
 #endif // ifdef DEBUG
 */
+
 #endif // ifndef DEBUG_HPP

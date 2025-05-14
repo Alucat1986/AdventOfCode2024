@@ -10,6 +10,8 @@
 
 #include "Include/UI/Menu.hpp"
 
+#include <string>
+
 namespace aoc {
 /**
  * @class App
@@ -24,13 +26,15 @@ namespace aoc {
 class App {
 public:
     App();
+    void run();
 
 private:
-    void Run();
+    void handleUserInput();
 
 private:
-    Menu mMenu;
-};
+    bool        mRunning;
+    std::string mInput;
+}; // class App
 
 } // namespace aoc
 
