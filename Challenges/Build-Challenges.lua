@@ -5,11 +5,11 @@ project "Challenges"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "Source/**.hpp", "Source/**.cpp" }
+   files { "Include/**.hpp", "Source/**.cpp" }
 
    includedirs
    {
-      "Include"
+      "."
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
