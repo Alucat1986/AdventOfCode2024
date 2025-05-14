@@ -5,12 +5,9 @@
  * @date 13.05.2025
  */
 
-#include <iostream>
+#include "Include/System/App.hpp"
 
 int main( int argc, char* argv[] ) {
-    std::cout << "Hello, World!" << "\n";
-    std::cout << "Arguments: " << argc << "\n";
-    for ( size_t i = 0; i < argc; i++ ) {
-        std::cout << argv[i] << "\n";
-    } // for ( size_t i = 0; i < argc; i++ )
+    aoc::App app;
+    app.run();
 } // int main( int argc, char* argv[] )
