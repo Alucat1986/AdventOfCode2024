@@ -17,17 +17,17 @@ namespace aoc {
 class Challenge01 {
 public:
     Challenge01( const std::string& filePath );
-    void RunChallenge();
+    void runChallenge();
 
 private:
-    bool readFile();
-    int  getDistanceBetweenVectors();
-    int  getSimilarityScore();
+    bool         readFile();
+    std::int64_t getDistanceBetweenVectors();
+    std::int64_t getSimilarityScore();
 
 private:
     const std::string         mFilePath;
-    std::vector<std::int32_t> mLeftVector;
-    std::vector<std::int32_t> mRightVector;
+    std::vector<std::int64_t> mLeftVector;
+    std::vector<std::int64_t> mRightVector;
 }; // class Challenge01
 
 } // namespace aoc

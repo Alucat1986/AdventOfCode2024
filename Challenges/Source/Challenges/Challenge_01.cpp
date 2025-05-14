@@ -10,6 +10,7 @@
 #include "Include/Debug/Debug.hpp"
 
 #include <algorithm>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -30,7 +31,7 @@ Challenge01::Challenge01( const std::string& filePath )
     debug::logMessage( "Challenge 01 initialized with file: ", mFilePath );
 } // Challenge01::Challenge01( ... )
 
-void Challenge01::RunChallenge() {
+void Challenge01::runChallenge() {
     std::cout << "Summed Distance: ";
     std::cout << getDistanceBetweenVectors() << "\n";
 
@@ -65,22 +66,22 @@ bool Challenge01::readFile() {
     return true;
 }
 
-int Challenge01::getDistanceBetweenVectors() {
-    size_t iterator{ 0 };
-    int    distance{ 0 };
+std::int64_t Challenge01::getDistanceBetweenVectors() {
+    size_t       iterator{ 0 };
+    std::int64_t distance{ 0 };
 
-    for ( int element : mLeftVector ) {
+    for ( std::int64_t element : mLeftVector ) {
         distance += std::abs( element - mRightVector.at( iterator ) );
         iterator++;
     }
     return distance;
 }
 
-int Challenge01::getSimilarityScore() {
-    size_t iterator{ 0 };
-    int    similarity{ 0 };
+std::int64_t Challenge01::getSimilarityScore() {
+    size_t       iterator{ 0 };
+    std::int64_t similarity{ 0 };
 
-    for ( int element : mLeftVector ) {
+    for ( std::int64_t element : mLeftVector ) {
         similarity += element * std::ranges::count( mRightVector, element );
     } // for ( int element : leftSide )
     return similarity;
