@@ -18,6 +18,7 @@ namespace aoc {
 class Menu {
 public:
     Menu();
+    ~Menu() = default;
 }; // class Menu
 
 } // namespace aoc

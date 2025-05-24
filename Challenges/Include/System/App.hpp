@@ -25,6 +25,7 @@ namespace aoc {
 class App {
 public:
     App();
+    ~App() = default;
     void run();
 
 private:
