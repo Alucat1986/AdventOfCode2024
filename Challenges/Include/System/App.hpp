@@ -12,6 +12,8 @@
 
 namespace aoc {
 
+using std::uint16_t;
+
 /**
  * @class App
  * @brief Manages the main loop and state of the program.
@@ -30,6 +32,7 @@ public:
 
 private:
     void handleUserInput();
+    void startChallenge( uint16_t challengeNumber );
 
 private:
     bool mRunning;
