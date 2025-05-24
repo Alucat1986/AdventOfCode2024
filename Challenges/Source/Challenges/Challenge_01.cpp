@@ -10,9 +10,12 @@
 #include "Include/Debug/Debug.hpp"
 
 #include <algorithm>
+#include <chrono>
 #include <cstdint>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -34,6 +37,22 @@ Challenge01::Challenge01( const std::string& filePath )
 } // Challenge01::Challenge01(...)
 
 void Challenge01::runChallenge() {
+    const auto partOneStart = std::chrono::system_clock::now();
+    partI                   = getDistanceBetweenVectors();
+    const auto partOneEnd   = std::chrono::system_clock::now();
+
+    const auto partTwoStart = std::chrono::system_clock::now();
+    partII                  = getSimilarityScore();
+    const auto partTwoEnd   = std::chrono::system_clock::now();
+
+    std::cout << "\n===========================================================\n";
+    std::cout << std::left << std::setw( 8 ) << "PartI:" << std::right << std::setw( 10 ) << partI << std::left
+              << std::setw( 14 ) << "  Time of execution:" << std::right << std::setw( 10 )
+              << std::chrono::duration_cast<std::chrono::microseconds>( partOneEnd - partOneStart ) << "\n";
+    std::cout << std::left << std::setw( 8 ) << "PartII:" << std::right << std::setw( 10 ) << partII << std::left
+              << std::setw( 14 ) << "  Time of execution:" << std::right << std::setw( 10 )
+              << std::chrono::duration_cast<std::chrono::microseconds>( partTwoEnd - partTwoStart ) << "\n";
+    std::cout << "===========================================================\n";
 } // void Challenge01::RunChallenge(...)
 
 bool Challenge01::readFile() {
