@@ -34,6 +34,8 @@ private:
 private:
     bool mRunning;
     char mInput;
+
+    Menu mMenu;
 }; // class App
 
 } // namespace aoc

@@ -30,13 +30,10 @@ App::App()
  */
 void App::run() {
     while ( mRunning ) {
-        std::cout << "=============================================================\n";
-        std::cout << "==================== Advent of Code 2025 ====================\n";
-        std::cout << "=============================================================\n";
-        std::cout << "========= Next Page(n), Previous Page(p), Quit(q) ===========\n";
+        mMenu.showMenu();
         std::cout << "Select a challenge: ";
         std::cin >> mInput;
-        std::cout << "\n";
+        std::cout << "\n\n";
 
         handleUserInput();
     } // while ( !exit )
@@ -53,6 +50,16 @@ void App::handleUserInput() {
         debug::logMessage( "Exiting program..." );
         return;
     } // if ( input == "q" )
+
+    if ( mInput == 'n' || mInput == 'N' ) {
+        mMenu.nextPage();
+    } // if ( mInput == 'n' || mInput == 'N' )
+    else if ( mInput == 'p' || mInput == 'P' ) {
+        mMenu.previousPage();
+    } // else if ( mInput == 'p' || mInput == 'P' )
+    else if ( mInput >= '0' && mInput <= '9' ) {
+        mMenu.selectChallenge( mInput - '0' );
+    } // else if ( mInput >= '0' && mInput <= '9' )
 
     mInput = 'o';
 }
