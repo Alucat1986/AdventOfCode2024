@@ -25,10 +25,11 @@ public:
     Menu();
     ~Menu() = default;
 
-    void showMenu() const;
-    void nextPage();
-    void previousPage();
-    bool selectChallenge( int challengeNumber );
+    void     showMenu() const;
+    void     nextPage();
+    void     previousPage();
+    bool     selectChallenge( int challengeNumber );
+    uint16_t getSelectedChallenge() const;
 
 private:
     void displayChallenges() const;

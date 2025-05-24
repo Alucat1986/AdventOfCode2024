@@ -95,6 +95,16 @@ bool Menu::selectChallenge( int challengeNumber ) {
 } // Menu::selectChallenge(...)
 
 /**
+ * @brief Gets the currently selected challenge.
+ * @author Alunya
+ * @date 24.05.2025
+ * @return The currently selected challenge.
+ */
+uint16_t Menu::getSelectedChallenge() const {
+    return mSelectedChallenge;
+} // Menu::getSelectedChallenge(...) const
+
+/**
  * @brief Displays the challenges on the current page.
  * @author Alunya
  * @date 24.05.2025
