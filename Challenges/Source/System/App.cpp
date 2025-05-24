@@ -21,7 +21,7 @@ namespace aoc {
  */
 App::App()
         : mRunning( true ),
-          mInput( 'n' ) {} // App::App()
+          mInput( 'o' ) {} // App::App()
 
 /**
  * @brief Runs the main loop of the application.
@@ -33,7 +33,7 @@ void App::run() {
         std::cout << "=============================================================\n";
         std::cout << "==================== Advent of Code 2025 ====================\n";
         std::cout << "=============================================================\n";
-        std::cout << "====== n for next page, p for previous page, q to quit=======\n";
+        std::cout << "========= Next Page(n), Previous Page(p), Quit(q) ===========\n";
         std::cout << "Select a challenge: ";
         std::cin >> mInput;
         std::cout << "\n";
@@ -54,7 +54,7 @@ void App::handleUserInput() {
         return;
     } // if ( input == "q" )
 
-    mInput = 'n';
+    mInput = 'o';
 }
 
 } // namespace aoc
