@@ -14,20 +14,24 @@
 
 namespace aoc {
 
+using std::int64_t;
+
 class Challenge01 {
 public:
     Challenge01( const std::string& filePath );
     void runChallenge();
 
 private:
-    bool         readFile();
-    std::int64_t getDistanceBetweenVectors();
-    std::int64_t getSimilarityScore();
+    bool    readFile();
+    int64_t getDistanceBetweenVectors();
+    int64_t getSimilarityScore();
 
 private:
-    const std::string         mFilePath;
-    std::vector<std::int64_t> mLeftVector;
-    std::vector<std::int64_t> mRightVector;
+    int64_t              partI;
+    int64_t              partII;
+    const std::string    mFilePath;
+    std::vector<int64_t> mLeftVector;
+    std::vector<int64_t> mRightVector;
 }; // class Challenge01
 
 } // namespace aoc

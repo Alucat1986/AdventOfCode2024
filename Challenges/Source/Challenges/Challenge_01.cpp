@@ -18,6 +18,8 @@
 
 namespace aoc {
 
+using std::int64_t, std::size_t;
+
 Challenge01::Challenge01( const std::string& filePath )
         : mFilePath( filePath ) {
     if ( !readFile() ) {
@@ -61,22 +63,22 @@ bool Challenge01::readFile() {
     return true;
 } // bool Challenge01::readFile(...)
 
-std::int64_t Challenge01::getDistanceBetweenVectors() {
-    size_t       iterator{ 0 };
-    std::int64_t distance{ 0 };
+int64_t Challenge01::getDistanceBetweenVectors() {
+    size_t  iterator{ 0 };
+    int64_t distance{ 0 };
 
-    for ( std::int64_t element : mLeftVector ) {
+    for ( int64_t element : mLeftVector ) {
         distance += std::abs( element - mRightVector.at( iterator ) );
         iterator++;
     }
     return distance;
 } // int64_t Challenge01::getDistanceBetweenVectors(...)
 
-std::int64_t Challenge01::getSimilarityScore() {
-    size_t       iterator{ 0 };
-    std::int64_t similarity{ 0 };
+int64_t Challenge01::getSimilarityScore() {
+    size_t  iterator{ 0 };
+    int64_t similarity{ 0 };
 
-    for ( std::int64_t element : mLeftVector ) {
+    for ( int64_t element : mLeftVector ) {
         similarity += element * std::ranges::count( mRightVector, element );
     } // for ( int element : leftSide )
     return similarity;
