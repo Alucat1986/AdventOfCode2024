@@ -95,7 +95,7 @@ void App::startChallenge( uint16_t challengeNumber ) {
         default : debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." ); break;
     } // switch ( challengeNumber )
 
-    std::cout << "\nPress any key to continue...\n";
+    std::cout << "\nPress Enter to continue...\n";
     std::cin.ignore(); // "Flush" the leftover input from the previous call of std::cin
     std::cin.get();
 }
