@@ -28,7 +28,7 @@ Challenge01::Challenge01( const std::string& filePath )
     std::ranges::sort( mLeftVector );
     std::ranges::sort( mRightVector );
 
-    debug::logMessage( "Challenge 01 initialized with file: ", mFilePath );
+    debug::logMessage( "Challenge 01 initialised with file: ", mFilePath );
 } // Challenge01::Challenge01( ... )
 
 void Challenge01::runChallenge() {
