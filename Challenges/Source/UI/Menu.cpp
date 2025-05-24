@@ -34,10 +34,14 @@ Menu::Menu()
  * @date 24.05.2025
  */
 void Menu::showMenu() const {
+    std::cout << "\033[H\033[J";
     std::cout << "=============================================================\n";
-    std::cout << "==================== Advent of Code 2025 ====================\n";
+    std::cout << "==================== Advent of Code 2024 ====================\n";
     std::cout << "=============================================================\n";
-    std::cout << "========= Next Page(n), Previous Page(p), Quit(q) ===========\n";
+    std::cout << "\n";
+    std::cout << "=============== Next Page(n), Previous Page(p) ==============\n";
+    std::cout << "=================  Run Challenge(r),Quit(q) =================\n";
+    std::cout << "\n";
     displayChallenges();
     std::cout << "-------------------------------------------------------------\n";
     std::cout << "Page (" << mCurrentPage + 1 << "/" << mTotalPages << ") - ";
