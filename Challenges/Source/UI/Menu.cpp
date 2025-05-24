@@ -23,7 +23,7 @@ using std::uint16_t;
  */
 Menu::Menu()
         : mCurrentPage( 0 ),
-          mSelectedChallenge( 0 ),
+          mSelectedChallenge( 1 ),
           mChallengesPerPage( 10 ),
           mTotalChallenges( 25 ),
           mTotalPages( ( mTotalChallenges + mChallengesPerPage - 1 ) / mChallengesPerPage ) {} // Menu::Menu( ... )
@@ -39,8 +39,10 @@ void Menu::showMenu() const {
     std::cout << "=============================================================\n";
     std::cout << "========= Next Page(n), Previous Page(p), Quit(q) ===========\n";
     displayChallenges();
+    std::cout << "-------------------------------------------------------------\n";
+    std::cout << "Page (" << mCurrentPage + 1 << "/" << mTotalPages << ") - ";
+    std::cout << "Selected challenge: " << mSelectedChallenge << "\n";
     std::cout << "=============================================================\n";
-    std::cout << "Page (" << mCurrentPage + 1 << "/" << mTotalPages << ")\n";
 } // void Menu::showMenu(...) const
 
 /**
@@ -83,8 +85,8 @@ bool Menu::selectChallenge( int challengeNumber ) {
         return false;
     }
 
-    mSelectedChallenge = challengeNumber + ( mCurrentPage * mChallengesPerPage );
-    debug::logMessage( "Selected challenge: ", mSelectedChallenge + 1 );
+    mSelectedChallenge = challengeNumber + ( mCurrentPage * mChallengesPerPage ) + 1;
+    debug::logMessage( "Selected challenge: ", mSelectedChallenge );
     return true;
 } // Menu::selectChallenge(...)
 
