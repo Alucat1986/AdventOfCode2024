@@ -17,9 +17,9 @@ AlignConsecutiveBitFields:
   AcrossComments:                               true
 AlignConsecutiveDeclarations:
   Enabled:                                      true
-  AcrossEmptyLines:                             false
+  AcrossEmptyLines:                             true
   AcrossComments:                               true
-  #AlignFunctionDeclarations:                    true
+  AlignFunctionDeclarations:                    true
 AlignConsecutiveMacros:
   Enabled:                                      true
   AcrossEmptyLines:                             true
@@ -37,7 +37,7 @@ AllowAllArgumentsOnNextLine:                    false
 AllowAllParametersOfDeclarationOnNextLine:      false
 AllowShortBlocksOnASingleLine:                  Empty
 AllowShortCaseLabelsOnASingleLine:              true
-AllowShortEnumsOnASingleLine:                   true
+AllowShortEnumsOnASingleLine:                   false
 AllowShortFunctionsOnASingleLine:               Empty
 AllowShortIfStatementsOnASingleLine:            Never
 AllowShortLambdasOnASingleLine:                 All
