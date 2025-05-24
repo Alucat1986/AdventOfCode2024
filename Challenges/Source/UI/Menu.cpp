@@ -39,6 +39,8 @@ void Menu::showMenu() const {
     std::cout << "=============================================================\n";
     std::cout << "========= Next Page(n), Previous Page(p), Quit(q) ===========\n";
     displayChallenges();
+    std::cout << "=============================================================\n";
+    std::cout << "Page (" << mCurrentPage + 1 << "/" << mTotalPages << ")\n";
 } // void Menu::showMenu(...) const
 
 /**
@@ -96,9 +98,6 @@ void Menu::displayChallenges() const {
           ++i ) {
         std::cout << i << ": Challenge " << ( mCurrentPage * mChallengesPerPage + i + 1 ) << "\n";
     } // for ( uint8_t i = 0; ... )
-
-    std::cout << "=============================================================\n";
-    std::cout << "Page (" << mCurrentPage + 1 << "/" << mTotalPages << ")\n";
 } // void Menu::displayChallenges(...) const
 
 } // namespace aoc
