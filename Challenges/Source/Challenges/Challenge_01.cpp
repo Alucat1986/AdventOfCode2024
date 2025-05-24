@@ -49,19 +49,19 @@ bool Challenge01::readFile() {
         return false;
     }
 
-    std::cout << "Reading file " << mFilePath << " ...\n";
+    std::cout << "Reading file " << mFilePath << " ...\n\n";
     while ( std::getline( fileToRead, line ) ) {
-        std::cout << "Line read: " << line << " Length(" << line.size() << "): ";
+        debug::logMessage( "Line read: ", line, " Length(", line.size(), "): " );
 
         position     = line.find_first_of( ' ' );
         tmpSubString = line.substr( 0, position );
         mLeftVector.emplace_back( std::stoi( tmpSubString ) );
-        std::cout << std::stoi( tmpSubString ) << " / ";
+        debug::logMessage( std::stoi( tmpSubString ), " / " );
 
         position     = line.find_last_of( ' ' );
         tmpSubString = line.substr( position, line.size() );
         mRightVector.emplace_back( std::stoi( tmpSubString ) );
-        std::cout << std::stoi( tmpSubString ) << "\n";
+        debug::logMessage( std::stoi( tmpSubString ) );
     } // while ( std::getline(fileToRead, line) )
     return true;
 }
