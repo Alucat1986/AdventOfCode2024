@@ -29,15 +29,10 @@ Challenge01::Challenge01( const std::string& filePath )
     std::ranges::sort( mRightVector );
 
     debug::logMessage( "Challenge 01 initialised with file: ", mFilePath );
-} // Challenge01::Challenge01( ... )
+} // Challenge01::Challenge01(...)
 
 void Challenge01::runChallenge() {
-    std::cout << "Summed Distance: ";
-    std::cout << getDistanceBetweenVectors() << "\n";
-
-    std::cout << "Summed Similarity: ";
-    std::cout << getSimilarityScore() << "\n";
-} // void Challenge01::RunChallenge( ... )
+} // void Challenge01::RunChallenge(...)
 
 bool Challenge01::readFile() {
     std::ifstream fileToRead( mFilePath );
@@ -64,7 +59,7 @@ bool Challenge01::readFile() {
         debug::logMessage( std::stoi( tmpSubString ) );
     } // while ( std::getline(fileToRead, line) )
     return true;
-}
+} // bool Challenge01::readFile(...)
 
 std::int64_t Challenge01::getDistanceBetweenVectors() {
     size_t       iterator{ 0 };
@@ -75,7 +70,7 @@ std::int64_t Challenge01::getDistanceBetweenVectors() {
         iterator++;
     }
     return distance;
-}
+} // int64_t Challenge01::getDistanceBetweenVectors(...)
 
 std::int64_t Challenge01::getSimilarityScore() {
     size_t       iterator{ 0 };
@@ -85,6 +80,6 @@ std::int64_t Challenge01::getSimilarityScore() {
         similarity += element * std::ranges::count( mRightVector, element );
     } // for ( int element : leftSide )
     return similarity;
-}
+} // int64_t Challenge01::getSimilarityScore(...)
 
 } // namespace aoc
