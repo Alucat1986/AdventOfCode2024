@@ -94,7 +94,9 @@ void App::startChallenge( uint16_t challengeNumber ) {
             challenge.runChallenge();
             break;
         }
-        default : debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." ); break;
+        default :
+            debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." );
+            break;
     } // switch ( challengeNumber )
 
     std::cout << "\nPress Enter to continue...\n";
