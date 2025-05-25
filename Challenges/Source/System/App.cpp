@@ -84,7 +84,7 @@ void App::startChallenge( uint16_t challengeNumber ) {
     std::string path = "Data/Challenge_";
     if ( challengeNumber < 10 ) {
         path += "0";
-    }
+    } // if ( challengeNumber < 10 )
     path += std::to_string( challengeNumber );
     path += ".txt";
 
@@ -93,7 +93,7 @@ void App::startChallenge( uint16_t challengeNumber ) {
             Challenge01 challenge( path );
             challenge.runChallenge();
             break;
-        }
+        } // case 1
         default :
             debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." );
             break;
