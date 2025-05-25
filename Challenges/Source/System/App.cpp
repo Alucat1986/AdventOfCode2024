@@ -12,7 +12,9 @@
 #include "Include/UI/Menu.hpp"
 
 #include <cstdint>
+#include <iosfwd>
 #include <iostream>
+#include <limits>
 #include <string>
 
 namespace aoc {
@@ -96,8 +98,9 @@ void App::startChallenge( uint16_t challengeNumber ) {
     } // switch ( challengeNumber )
 
     std::cout << "\nPress Enter to continue...\n";
-    std::cin.ignore(); // "Flush" the leftover input from the previous call of std::cin
+    // "Flush" the leftover input from the previous call of std::cin
+    std::cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );
     std::cin.get();
-}
+} // void App::startChallenge(...)
 
 } // namespace aoc
