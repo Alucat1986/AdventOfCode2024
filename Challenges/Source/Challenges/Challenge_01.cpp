@@ -1,13 +1,13 @@
 /**
- * @file challenge_01.cpp
+ * @file Challenge_01.cpp
  * @author Alunya
  * @brief Contains the day 01 challenge implementation.
- * @date 13.05.2025
+ * @date 26.07.2025
  */
 
-#include "Include/Challenges/Challenge_01.hpp"
+#include "Challenge_01.hpp"
 
-#include "Include/Debug/Debug.hpp"
+#include "../Debug/Debug.hpp"
 
 #include <algorithm>
 #include <chrono>

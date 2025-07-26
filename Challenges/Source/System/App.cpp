@@ -5,11 +5,11 @@
  * @date 24.05.2025
  */
 
-#include "Include/System/App.hpp"
+#include "App.hpp"
 
-#include "Include/Challenges/Challenge_01.hpp"
-#include "Include/Debug/Debug.hpp"
-#include "Include/UI/Menu.hpp"
+#include "../Challenges/Challenge_01.hpp"
+#include "../Debug/Debug.hpp"
+#include "../UI/Menu.hpp"
 
 #include <cstdint>
 #include <iosfwd>

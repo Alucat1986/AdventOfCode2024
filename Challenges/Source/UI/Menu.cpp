@@ -1,13 +1,13 @@
 /**
- * @file Menu.hpp
+ * @file Menu.cpp
  * @author Alunya
  * @brief Contains the menu class implementation.
- * @date 24.05.2025
+ * @date 26.07.2025
  */
 
-#include "Include/UI/Menu.hpp"
+#include "Menu.hpp"
 
-#include "Include/Debug/debug.hpp"
+#include "../Debug/Debug.hpp"
 
 #include <cstdint>
 #include <iostream>

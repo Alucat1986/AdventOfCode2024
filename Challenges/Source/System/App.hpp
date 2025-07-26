@@ -8,7 +8,7 @@
 #ifndef APP_HPP
 #define APP_HPP
 
-#include "Include/UI/Menu.hpp"
+#include "../UI/Menu.hpp"
 
 namespace aoc {
 

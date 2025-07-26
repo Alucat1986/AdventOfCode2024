@@ -5,7 +5,7 @@
  * @date 13.05.2025
  */
 
-#include "Include/System/App.hpp"
+#include "System/App.hpp"
 
 int main( int argc, char* argv[] ) {
     aoc::App app;
