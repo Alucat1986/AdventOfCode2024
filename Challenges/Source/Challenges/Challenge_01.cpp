@@ -17,14 +17,18 @@
 #include <iostream>
 #include <ranges>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace aoc {
-
 using std::int64_t, std::size_t;
 
-Challenge01::Challenge01( const std::string& filePath )
-        : mFilePath( filePath ) {
+// ****************************************************************************************************************** //
+//                                                      PUBLIC                                                        //
+// ****************************************************************************************************************** //
+
+Challenge01::Challenge01( const std::string_view filePath )
+        : BaseChallenge( filePath ) {
     if ( !readFile() ) {
         debug::logMessage( "Challenge 01:: Initialisation failed: File not loaded", mFilePath );
         return;
