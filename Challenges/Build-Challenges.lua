@@ -5,7 +5,7 @@ project "Challenges"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "**.hpp", "**.cpp" }
+   files { "Source/**.hpp", "Source/**.cpp" }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
