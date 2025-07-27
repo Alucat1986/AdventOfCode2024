@@ -7,11 +7,6 @@ project "Challenges"
 
    files { "**.hpp", "**.cpp" }
 
-   includedirs
-   {
-      "Source"
-   }
-
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
