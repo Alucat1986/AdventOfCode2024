@@ -112,7 +112,6 @@ int64_t Challenge01::getDistanceBetweenVectors() {
  * @return The similarity score.
  */
 int64_t Challenge01::getSimilarityScore() {
-    size_t  iterator{ 0 };
     int64_t similarity{ 0 };
 
     for ( int64_t element : mLeftVector ) {

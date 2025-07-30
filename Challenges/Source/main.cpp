@@ -7,7 +7,7 @@
 
 #include "System/App.hpp"
 
-int main( int argc, char* argv[] ) {
+int main( /*int argc, char* argv[]*/ ) {
     aoc::App app;
     app.run();
 } // int main(...)
