@@ -2,12 +2,13 @@
  * @file Challenge_01.cpp
  * @author Alunya
  * @brief Contains the day 01 challenge implementation.
- * @date 26.07.2025
+ * @date 30.07.2025
  */
 
 #include "Challenge_01.hpp"
 
 #include "../Debug/Debug.hpp"
+#include "../Utils/ChallengeResult.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -46,10 +47,25 @@ Challenge01::Challenge01( const std::string_view filePath )
     debug::logMessage( "Challenge 01 initialised with file: ", mFilePath );
 } // Challenge01::Challenge01(...)
 
-void Challenge01::runChallenge() {
-    const auto partOneStart = std::chrono::system_clock::now();
-    partI                   = getDistanceBetweenVectors();
-    const auto partOneEnd   = std::chrono::system_clock::now();
+/**
+ * @brief Runs the challenge.
+ * @author Alunya
+ * @date 30.07.2025
+ * @return The result of the challenge including their execution times.
+ */
+ChallengeResult Challenge01::runChallenge() {
+    const auto partOneStart     = std::chrono::system_clock::now();
+    mResult.partI               = getDistanceBetweenVectors();
+    const auto partOneEnd       = std::chrono::system_clock::now();
+    mResult.executionTimePartI  = std::chrono::duration_cast<std::chrono::microseconds>( partOneEnd - partOneStart );
+
+    const auto partTwoStart     = std::chrono::system_clock::now();
+    mResult.partII              = getSimilarityScore();
+    const auto partTwoEnd       = std::chrono::system_clock::now();
+    mResult.executionTimePartII = std::chrono::duration_cast<std::chrono::microseconds>( partTwoEnd - partTwoStart );
+
+    return mResult;
+} // ChallengeResult Challenge01::RunChallenge(...)
 
 // ****************************************************************************************************************** //
 //                                                      PRIVATE                                                       //
