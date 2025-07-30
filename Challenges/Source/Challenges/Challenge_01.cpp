@@ -27,6 +27,12 @@ using std::int64_t, std::size_t;
 //                                                      PUBLIC                                                        //
 // ****************************************************************************************************************** //
 
+/**
+ * @brief Constructor.
+ * @author Alunya
+ * @date 30.07.2025
+ * @param[in] filePath The path to the input file.
+ */
 Challenge01::Challenge01( const std::string_view filePath )
         : BaseChallenge( filePath ) {
     if ( !readFile() ) {
@@ -45,20 +51,16 @@ void Challenge01::runChallenge() {
     partI                   = getDistanceBetweenVectors();
     const auto partOneEnd   = std::chrono::system_clock::now();
 
-    const auto partTwoStart = std::chrono::system_clock::now();
-    partII                  = getSimilarityScore();
-    const auto partTwoEnd   = std::chrono::system_clock::now();
+// ****************************************************************************************************************** //
+//                                                      PRIVATE                                                       //
+// ****************************************************************************************************************** //
 
-    std::cout << "\n===========================================================\n";
-    std::cout << std::left << std::setw( 8 ) << "PartI:" << std::right << std::setw( 10 ) << partI << std::left
-              << std::setw( 14 ) << "  Time of execution:" << std::right << std::setw( 10 )
-              << std::chrono::duration_cast<std::chrono::microseconds>( partOneEnd - partOneStart ) << "\n";
-    std::cout << std::left << std::setw( 8 ) << "PartII:" << std::right << std::setw( 10 ) << partII << std::left
-              << std::setw( 14 ) << "  Time of execution:" << std::right << std::setw( 10 )
-              << std::chrono::duration_cast<std::chrono::microseconds>( partTwoEnd - partTwoStart ) << "\n";
-    std::cout << "===========================================================\n";
-} // void Challenge01::RunChallenge(...)
-
+/**
+ * @brief Reads the input file and populates the left and right vectors.
+ * @author Alunya
+ * @date 30.07.2025
+ * @return true When the file was read successfully, otherwise false.
+ */
 bool Challenge01::readFile() {
     std::ifstream fileToRead( mFilePath );
     std::string   line = "", tmpSubString = "";
@@ -86,6 +88,12 @@ bool Challenge01::readFile() {
     return true;
 } // bool Challenge01::readFile(...)
 
+/**
+ * @brief Calculates the sum of distances between the left and right vectors.
+ * @author Alunya
+ * @date 30.07.2025
+ * @return The total distance between the two vectors.
+ */
 int64_t Challenge01::getDistanceBetweenVectors() {
     size_t  iterator{ 0 };
     int64_t distance{ 0 };
@@ -97,6 +105,12 @@ int64_t Challenge01::getDistanceBetweenVectors() {
     return distance;
 } // int64_t Challenge01::getDistanceBetweenVectors(...)
 
+/**
+ * @brief Calculates the similarity score between the left and right vectors.
+ * @author Alunya
+ * @date 30.07.2025
+ * @return The similarity score.
+ */
 int64_t Challenge01::getSimilarityScore() {
     size_t  iterator{ 0 };
     int64_t similarity{ 0 };

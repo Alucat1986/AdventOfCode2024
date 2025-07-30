@@ -13,6 +13,16 @@
 
 namespace aoc {
 
+/**
+ * @class BaseChallenge
+ * @brief Abstract class for challenges.
+ * @author Alunya
+ * @date 30.07.2025
+ *
+ * The BaseChallenge class serves as a blueprint for all challenge implementations.
+ * It provides a common interface and shared functionality for reading input files,
+ * running challenges, and storing results.
+ */
 class BaseChallenge {
 public:
     BaseChallenge( const std::string_view filePath );

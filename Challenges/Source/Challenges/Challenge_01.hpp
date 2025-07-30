@@ -18,6 +18,14 @@
 namespace aoc {
 using std::int64_t;
 
+/**
+ * @class Challenge01
+ * @brief Class for the day 01 challenge.
+ * @author Alunya
+ * @date 30.07.2025
+ *
+ * The Challenge01 class implements the first challenge of the 'Advent of Code 2024'.
+ */
 class Challenge01 : public BaseChallenge {
 public:
     Challenge01( const std::string_view filePath );
