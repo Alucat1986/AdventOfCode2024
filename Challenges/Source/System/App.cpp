@@ -8,6 +8,7 @@
 #include "App.hpp"
 
 #include "../Challenges/Challenge01.hpp"
+#include "../Challenges/Challenge02.hpp"
 #include "../Debug/Debug.hpp"
 #include "../UI/Menu.hpp"
 #include "../Utils/ChallengeResult.hpp"
@@ -83,7 +84,7 @@ void App::handleUserInput() {
  * @brief Starts the selected challenge.
  * @param[in] challengeNumber The number of the challenge to start.
  * @author Alunya
- * @date 30.07.2025
+ * @date 31.07.2025
  */
 void App::startChallenge( uint16_t challengeNumber ) {
     std::string path = "Data/Challenge_";
@@ -101,6 +102,11 @@ void App::startChallenge( uint16_t challengeNumber ) {
             result = challenge.runChallenge();
             break;
         } // case 1
+        case 2 : {
+            Challenge02 challenge( path );
+            result = challenge.runChallenge();
+            break;
+        } // case 2
         default :
             debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." );
             break;
