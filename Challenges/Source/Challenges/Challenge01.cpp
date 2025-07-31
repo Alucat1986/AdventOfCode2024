@@ -2,17 +2,19 @@
  * @file Challenge01.cpp
  * @author Alunya
  * @brief Contains the day 01 challenge implementation.
- * @date 30.07.2025
+ * @date 31.07.2025
  */
 
 #include "Challenge01.hpp"
 
+#include "BaseChallenge.hpp"
 #include "../Debug/Debug.hpp"
 #include "../Utils/ChallengeResult.hpp"
 
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -74,12 +76,12 @@ ChallengeResult Challenge01::runChallenge() {
 /**
  * @brief Reads the input file and populates the left and right vectors.
  * @author Alunya
- * @date 30.07.2025
+ * @date 31.07.2025
  * @return true When the file was read successfully, otherwise false.
  */
 bool Challenge01::readFile() {
     std::ifstream fileToRead( mFilePath );
-    std::string   line = "", tmpSubString = "";
+    std::string   line{ "" }, tmpSubString{ "" };
     size_t        position{ 0 };
 
     if ( !fileToRead.is_open() ) {
@@ -93,12 +95,12 @@ bool Challenge01::readFile() {
 
         position     = line.find_first_of( ' ' );
         tmpSubString = line.substr( 0, position );
-        mLeftVector.emplace_back( std::stoi( tmpSubString ) );
+        mLeftVector.emplace_back( static_cast<int64_t>( std::stoi( tmpSubString ) ) );
         debug::logMessage( std::stoi( tmpSubString ), " / " );
 
         position     = line.find_last_of( ' ' );
         tmpSubString = line.substr( position, line.size() );
-        mRightVector.emplace_back( std::stoi( tmpSubString ) );
+        mRightVector.emplace_back( static_cast<int64_t>( std::stoi( tmpSubString ) ) );
         debug::logMessage( std::stoi( tmpSubString ) );
     } // while ( std::getline(fileToRead, line) )
     return true;
