@@ -1,8 +1,8 @@
 /**
- * @file Challenge_01.hpp
+ * @file Challenge01.hpp
  * @author Alunya
  * @brief Contains the day 01 challenge declaration.
- * @date 30.07.2025
+ * @date 31.07.2025
  */
 
 #ifndef CHALLENGE_01_HPP
