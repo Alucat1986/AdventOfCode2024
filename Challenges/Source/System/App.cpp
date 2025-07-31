@@ -2,12 +2,12 @@
  * @file App.cpp
  * @author Alunya
  * @brief Contains the app class implementation.
- * @date 30.07.2025
+ * @date 31.07.2025
  */
 
 #include "App.hpp"
 
-#include "../Challenges/Challenge_01.hpp"
+#include "../Challenges/Challenge01.hpp"
 #include "../Debug/Debug.hpp"
 #include "../UI/Menu.hpp"
 #include "../Utils/ChallengeResult.hpp"

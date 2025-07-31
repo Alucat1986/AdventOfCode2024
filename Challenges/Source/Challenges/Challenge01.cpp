@@ -1,11 +1,11 @@
 /**
- * @file Challenge_01.cpp
+ * @file Challenge01.cpp
  * @author Alunya
  * @brief Contains the day 01 challenge implementation.
  * @date 30.07.2025
  */
 
-#include "Challenge_01.hpp"
+#include "Challenge01.hpp"
 
 #include "../Debug/Debug.hpp"
 #include "../Utils/ChallengeResult.hpp"
@@ -105,10 +105,10 @@ bool Challenge01::readFile() {
 } // bool Challenge01::readFile(...)
 
 /**
- * @brief Calculates the sum of distances between the left and right vectors.
+ * @brief Calculates the distance between the two vectors.
  * @author Alunya
- * @date 30.07.2025
- * @return The total distance between the two vectors.
+ * @date 31.07.2025
+ * @return The summed distance between the two vectors.
  */
 int64_t Challenge01::getDistanceBetweenVectors() {
     size_t  iterator{ 0 };
@@ -122,9 +122,9 @@ int64_t Challenge01::getDistanceBetweenVectors() {
 } // int64_t Challenge01::getDistanceBetweenVectors(...)
 
 /**
- * @brief Calculates the similarity score between the left and right vectors.
+ * @brief Calculates the similarity score between the two vectors.
  * @author Alunya
- * @date 30.07.2025
+ * @date 31.07.2025
  * @return The similarity score.
  */
 int64_t Challenge01::getSimilarityScore() {
@@ -132,7 +132,7 @@ int64_t Challenge01::getSimilarityScore() {
 
     for ( int64_t element : mLeftVector ) {
         similarity += element * std::ranges::count( mRightVector, element );
-    } // for ( int element : leftSide )
+    } // for ( int64_t element : mLeftVector )
     return similarity;
 } // int64_t Challenge01::getSimilarityScore(...)
 
