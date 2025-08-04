@@ -2,7 +2,7 @@
  * @file App.cpp
  * @author Alunya
  * @brief Contains the app class implementation.
- * @date 31.07.2025
+ * @date 04.08.2025
  */
 
 #include "App.hpp"
@@ -84,10 +84,10 @@ void App::handleUserInput() {
  * @brief Starts the selected challenge.
  * @param[in] challengeNumber The number of the challenge to start.
  * @author Alunya
- * @date 31.07.2025
+ * @date 04.08.2025
  */
 void App::startChallenge( uint16_t challengeNumber ) {
-    std::string path = "Data/Challenge_";
+    std::string path = "Data/Challenge";
     if ( challengeNumber < 10 ) {
         path += "0";
     } // if ( challengeNumber < 10 )
