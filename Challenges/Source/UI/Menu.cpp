@@ -2,7 +2,7 @@
  * @file Menu.cpp
  * @author Alunya
  * @brief Contains the menu class implementation.
- * @date 26.07.2025
+ * @date 04.08.2025
  */
 
 #include "Menu.hpp"
@@ -13,8 +13,6 @@
 #include <iostream>
 
 namespace aoc {
-
-using std::uint16_t;
 
 /**
  * @brief Constructor.
@@ -97,23 +95,23 @@ bool Menu::selectChallenge( int challengeNumber ) {
 /**
  * @brief Gets the currently selected challenge.
  * @author Alunya
- * @date 24.05.2025
+ * @date 04.08.2025
  * @return The currently selected challenge.
  */
-uint16_t Menu::getSelectedChallenge() const {
+std::uint16_t Menu::getSelectedChallenge() const {
     return mSelectedChallenge;
 } // Menu::getSelectedChallenge(...) const
 
 /**
  * @brief Displays the challenges on the current page.
  * @author Alunya
- * @date 24.05.2025
+ * @date 04.08.2025
  */
 void Menu::displayChallenges() const {
-    for ( uint16_t i = 0; i < mChallengesPerPage && ( mCurrentPage * mChallengesPerPage + i ) < mTotalChallenges;
+    for ( std::uint16_t i = 0; i < mChallengesPerPage && ( mCurrentPage * mChallengesPerPage + i ) < mTotalChallenges;
           ++i ) {
         std::cout << i << ": Challenge " << ( mCurrentPage * mChallengesPerPage + i + 1 ) << "\n";
-    } // for ( uint8_t i = 0; ... )
+    } // for ( std::uint16_t i = 0; ... )
 } // void Menu::displayChallenges(...) const
 
 } // namespace aoc

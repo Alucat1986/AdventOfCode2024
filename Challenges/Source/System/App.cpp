@@ -22,8 +22,6 @@
 
 namespace aoc {
 
-using std::uint16_t;
-
 /**
  * @brief Constructor.
  * @author Alunya
@@ -87,7 +85,7 @@ void App::handleUserInput() {
  * @author Alunya
  * @date 04.08.2025
  */
-void App::startChallenge( uint16_t challengeNumber ) {
+void App::startChallenge( std::uint16_t challengeNumber ) {
     std::string path = "Data/Challenge";
     if ( challengeNumber < 10 ) {
         path += "0";

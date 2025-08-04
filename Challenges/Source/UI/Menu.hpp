@@ -2,7 +2,7 @@
  * @file Menu.hpp
  * @author Alunya
  * @brief Contains the menu class declaration.
- * @date 24.05.2025
+ * @date 04.08.2025
  */
 
 #ifndef MENU_HPP
@@ -12,34 +12,32 @@
 
 namespace aoc {
 
-using std::uint16_t;
-
 /**
  * @class Menu
  * @brief Manages the console menu.
  * @author Alunya
- * @date 24.05.2025
+ * @date 04.08.2025
  */
 class Menu {
 public:
     Menu();
     ~Menu() = default;
 
-    void     showMenu() const;
-    void     nextPage();
-    void     previousPage();
-    bool     selectChallenge( int challengeNumber );
-    uint16_t getSelectedChallenge() const;
+    void          showMenu() const;
+    void          nextPage();
+    void          previousPage();
+    bool          selectChallenge( int challengeNumber );
+    std::uint16_t getSelectedChallenge() const;
 
 private:
     void displayChallenges() const;
 
 private:
-    uint16_t       mCurrentPage;
-    uint16_t       mSelectedChallenge;
-    const uint16_t mChallengesPerPage;
-    const uint16_t mTotalChallenges;
-    const uint16_t mTotalPages;
+    std::uint16_t       mCurrentPage;
+    std::uint16_t       mSelectedChallenge;
+    const std::uint16_t mChallengesPerPage;
+    const std::uint16_t mTotalChallenges;
+    const std::uint16_t mTotalPages;
 }; // class Menu
 
 } // namespace aoc

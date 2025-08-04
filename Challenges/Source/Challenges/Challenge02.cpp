@@ -24,7 +24,6 @@
 #include <vector>
 
 namespace aoc {
-using std::int64_t, std::size_t;
 
 // ****************************************************************************************************************** //
 //                                                      PUBLIC                                                        //
@@ -74,13 +73,13 @@ ChallengeResult Challenge02::runChallenge() {
 /**
  * @brief Reads the input file and populates the left and right vectors.
  * @author Alunya
- * @date 31.07.2025
+ * @date 04.08.2025
  * @return True if the file was read successfully, false otherwise.
  */
 bool Challenge02::readFile() {
     std::ifstream fileToRead( mFilePath );
     std::string   line{ "" }, tmpSubString{ "" };
-    size_t        position{ 0 };
+    std::size_t   position{ 0 };
 
     if ( !fileToRead.is_open() ) {
         std::cout << "Failed to open " << mFilePath << " ...\n";
@@ -93,12 +92,12 @@ bool Challenge02::readFile() {
 
         position     = line.find_first_of( ' ' );
         tmpSubString = line.substr( 0, position );
-        mLeftVector.emplace_back( static_cast<int64_t>( std::stoi( tmpSubString ) ) );
+        mLeftVector.emplace_back( static_cast<std::int64_t>( std::stoi( tmpSubString ) ) );
         debug::logMessage( std::stoi( tmpSubString ), " / " );
 
         position     = line.find_last_of( ' ' );
         tmpSubString = line.substr( position, line.size() );
-        mRightVector.emplace_back( static_cast<int64_t>( std::stoi( tmpSubString ) ) );
+        mRightVector.emplace_back( static_cast<std::int64_t>( std::stoi( tmpSubString ) ) );
         debug::logMessage( std::stoi( tmpSubString ) );
     } // while ( std::getline(fileToRead, line) )
     return true;
@@ -107,33 +106,33 @@ bool Challenge02::readFile() {
 /**
  * @brief Calculates the distance between the two vectors.
  * @author Alunya
- * @date 31.07.2025
+ * @date 04.08.2025
  * @return The summed distance between the two vectors.
  */
-int64_t Challenge02::getDistanceBetweenVectors() const {
-    size_t  iterator{ 0 };
-    int64_t distance{ 0 };
+std::int64_t Challenge02::getDistanceBetweenVectors() const {
+    std::size_t  iterator{ 0 };
+    std::int64_t distance{ 0 };
 
-    for ( int64_t element : mLeftVector ) {
+    for ( std::int64_t element : mLeftVector ) {
         distance += std::abs( element - mRightVector.at( iterator ) );
         iterator++;
     }
     return distance;
-} // int64_t Challenge02::getDistanceBetweenVectors() const
+} // std::int64_t Challenge02::getDistanceBetweenVectors() const
 
 /**
  * @brief Calculates the similarity score between the two vectors.
  * @author Alunya
- * @date 31.07.2025
+ * @date 04.08.2025
  * @return The similarity score.
  */
-int64_t Challenge02::getSimilarityScore() const {
-    int64_t similarity{ 0 };
+std::int64_t Challenge02::getSimilarityScore() const {
+    std::int64_t similarity{ 0 };
 
-    for ( int64_t element : mLeftVector ) {
+    for ( std::int64_t element : mLeftVector ) {
         similarity += element * std::ranges::count( mRightVector, element );
-    } // for ( int64_t element : mLeftVector )
+    } // for ( std::int64_t element : mLeftVector )
     return similarity;
-} // int64_t Challenge02::getSimilarityScore() const
+} // std::int64_t Challenge02::getSimilarityScore() const
 
 } // namespace aoc

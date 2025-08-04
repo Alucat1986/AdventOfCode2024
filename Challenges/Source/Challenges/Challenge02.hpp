@@ -2,7 +2,7 @@
  * @file Challenge02.hpp
  * @author Alunya
  * @brief Contains the day 02 challenge declaration.
- * @date 31.07.2025
+ * @date 04.08.2025
  */
 
 #ifndef CHALLENGE_02_HPP
@@ -17,13 +17,12 @@
 #include <vector>
 
 namespace aoc {
-using std::int64_t;
 
 /**
  * @class Challenge02
  * @brief Class for the day 02 challenge.
  * @author Alunya
- * @date 31.07.2025
+ * @date 04.08.2025
  *
  * The Challenge02 class implements the second challenge of the 'Advent of Code 2024'.
  */
@@ -35,13 +34,13 @@ public:
     ChallengeResult runChallenge() override;
 
 private:
-    bool    readFile() override;
-    int64_t getDistanceBetweenVectors() const;
-    int64_t getSimilarityScore() const;
+    bool         readFile() override;
+    std::int64_t getDistanceBetweenVectors() const;
+    std::int64_t getSimilarityScore() const;
 
 private:
-    std::vector<int64_t> mLeftVector;
-    std::vector<int64_t> mRightVector;
+    std::vector<std::int64_t> mLeftVector;
+    std::vector<std::int64_t> mRightVector;
 }; // class Challenge02
 
 } // namespace aoc
