@@ -9,6 +9,7 @@
 
 #include "../Challenges/Challenge01.hpp"
 #include "../Challenges/Challenge02.hpp"
+#include "../Challenges/Challenge03.hpp"
 #include "../Debug/Debug.hpp"
 #include "../UI/Menu.hpp"
 #include "../Utils/ChallengeResult.hpp"
@@ -107,6 +108,11 @@ void App::startChallenge( uint16_t challengeNumber ) {
             result = challenge.runChallenge();
             break;
         } // case 2
+        case 3 : {
+            Challenge03 challenge( path );
+            result = challenge.runChallenge();
+            break;
+        } // case 3
         default :
             debug::logMessage( "Well I shouldn't be here, means this Challenge is not implemented yet." );
             break;
